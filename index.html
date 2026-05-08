@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRMIST GPA Calculator</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar glass">
+        <div class="nav-brand">
+            <img src="assets/images/Logo.png" alt="SRM Logo" class="nav-logo">
+            <span>SRMIST Calculator</span>
+        </div>
+        <div class="nav-links">
+            <a href="#dashboard" class="active">Dashboard</a>
+            <a href="#sgpa">SGPA</a>
+            <a href="#cgpa">CGPA</a>
+            <a href="#estimator">Estimator</a>
+        </div>
+        <button class="menu-btn" id="menuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu glass" id="mobileMenu">
+        <a href="#dashboard">Dashboard</a>
+        <a href="#sgpa">SGPA Calculator</a>
+        <a href="#cgpa">CGPA History</a>
+        <a href="#estimator">Estimator</a>
+    </div>
+
+    <main class="container">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="hero">
+                <h1>Calculate, Track & Predict your <span>Grades</span></h1>
+                <p>21 Regulation compliant GPA calculator for SRM students.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card glass glow-blue">
+                    <h3>Current CGPA</h3>
+                    <h2 id="dashCgpa">0.00</h2>
+                </div>
+                <div class="stat-card glass glow-green">
+                    <h3>Total Credits</h3>
+                    <h2 id="dashCredits">0</h2>
+                </div>
+                <div class="stat-card glass glow-purple">
+                    <h3>Overall Grade</h3>
+                    <h2 id="dashGrade">-</h2>
+                </div>
+            </div>
+
+            <div class="chart-container glass">
+                <h3><i class="fa-solid fa-chart-line"></i> GPA Trend</h3>
+                <canvas id="gpaChart"></canvas>
+            </div>
+        </section>
+
+        <!-- SGPA Calculator Section -->
+        <section id="sgpa" class="section">
+            <div class="section-header">
+                <h2>SGPA Calculator</h2>
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="app.addSubjectRow()"><i class="fa-solid fa-plus"></i> Add Subject</button>
+                    <button class="btn btn-danger" onclick="app.clearCurrentSubjects()"><i class="fa-solid fa-trash"></i> Clear</button>
+                </div>
+            </div>
+
+            <div class="calculator-card glass">
+                <div class="table-responsive">
+                    <table class="subjects-table">
+                        <thead>
+                            <tr>
+                                <th>Subject Code</th>
+                                <th>Credits</th>
+                                <th>Grade</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subjectsList">
+                            <!-- Rows dynamically populated -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="sgpa-result-panel">
+                    <div class="result-box">
+                        <span class="label">Total Credits:</span>
+                        <span class="value" id="currentSemCredits">0</span>
+                    </div>
+                    <div class="result-box glow-blue">
+                        <span class="label">SGPA:</span>
+                        <span class="value lg" id="currentSgpa">0.00</span>
+                    </div>
+                    <div class="save-action">
+                        <button class="btn btn-primary" onclick="app.saveSemesterData()"><i class="fa-solid fa-save"></i> Save Semester</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CGPA & History Section -->
+        <section id="cgpa" class="section">
+            <div class="section-header">
+                <h2>CGPA & Semester History</h2>
+                <button class="btn btn-danger" onclick="app.resetAllData()"><i class="fa-solid fa-rotate-right"></i> Reset All Data</button>
+            </div>
+
+            <div class="cgpa-overview glass glow-blue">
+                <div class="cgpa-text">
+                    <h3>Cumulative GPA</h3>
+                    <p>Based on your saved semesters</p>
+                </div>
+                <div class="cgpa-score" id="overallCgpa">
+                    0.00
+                </div>
+            </div>
+
+            <!-- Manual Semester Entry -->
+            <div class="manual-entry-card glass">
+                <div class="manual-entry-header">
+                    <h3><i class="fa-solid fa-plus-circle"></i> Add Previous Semester</h3>
+                    <p>Manually enter your previous semester details to calculate cumulative GPA.</p>
+                </div>
+                <div class="manual-entry-form">
+                    <div class="form-group flex-2">
+                        <label>Semester Name</label>
+                        <input type="text" id="manualSemName" placeholder="e.g. Semester 1">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>SGPA (0-10)</label>
+                        <input type="number" id="manualSgpa" min="0" max="10" step="0.01" placeholder="e.g. 8.5">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>Credits</label>
+                        <input type="number" id="manualCredits" min="1" max="30" placeholder="e.g. 20">
+                    </div>
+                    <button class="btn btn-primary add-sem-btn" onclick="app.addManualSemester()"><i class="fa-solid fa-plus"></i> Add</button>
+                </div>
+            </div>
+
+            <div class="semesters-list" id="semestersList">
+                <!-- Semester cards dynamically populated -->
+            </div>
+        </section>
+
+        <!-- Estimator Section -->
+        <section id="estimator" class="section">
+            <div class="section-header">
+                <h2>Grade Estimator</h2>
+                <p>Find out what you need in your external to achieve your target grade.</p>
+            </div>
+
+            <div class="estimator-grid">
+                <div class="estimator-card glass">
+                    <h3><i class="fa-solid fa-bullseye"></i> Target Grade Required</h3>
+                    <div class="form-group">
+                        <label>Internal Marks (Out of 60)</label>
+                        <input type="number" id="estInternal" min="0" max="60" placeholder="e.g. 50">
+                    </div>
+                    <div class="form-group">
+                        <label>Target Grade</label>
+                        <select id="estTargetGrade">
+                            <option value="91">O (91 - 100)</option>
+                            <option value="81">A+ (81 - 90)</option>
+                            <option value="71">A (71 - 80)</option>
+                            <option value="61">B+ (61 - 70)</option>
+                            <option value="56">B (56 - 60)</option>
+                            <option value="50">C (50 - 55)</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary w-100" onclick="app.calculateEstExternal()">Calculate Requirement</button>
+                    <div class="est-result mt-2" id="estExtResult"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Immani Sai. All rights reserved.</p>
+    </footer>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
