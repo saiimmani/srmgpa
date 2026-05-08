@@ -8,10 +8,10 @@ A sleek, lightweight, frontend-only GPA/CGPA calculator built specifically for S
 - **Grade Prediction:** Built-in estimator to predict required external exam marks to hit a target grade.
 - **Local Storage Saver:** Automatically saves your semesters locally so you never lose your progress! No sign-up required.
 - **Chart Analysis:** Visualize your academic performance via beautiful GPA trends!
-- **Apple-inspired UI:** Glassmorphism, smooth animations, and a stunning dark mode interface.
+- **UI:** Glassmorphism, smooth animations, and a stunning dark mode interface.
 - **Mobile Responsive:** Works perfectly across desktop, tablet, and mobile devices.
 
-## 🧮 21st Regulation Logic
+## 🧮 21 Regulation
 - **Internal Marks:** Out of 60
 - **External Marks:** Out of 75 (Automatically converted to 40)
 - **Total Marks:** Internal + Converted External.
@@ -40,24 +40,8 @@ srmgpa/
 - FontAwesome (Icons)
 - Google Fonts (Inter)
 
-## 🚀 How to use
-There are no build steps, frameworks, or databases needed! 
-Simply download the repository and open `index.html` in your favorite web browser.
 
-## 🌐 GitHub Pages Deployment
-Because this project contains pure static files, it can be deployed on GitHub Pages in under a minute:
 
-1. Push this code to your repository: `https://github.com/saiimmani/srmgpa.git`
-2. Navigate to your repository settings on GitHub.
-3. Click on **Pages** in the left sidebar.
-4. Under "Build and deployment", set the Source to **Deploy from a branch**.
-5. Select the **main** branch and the `/root` folder.
-6. Click **Save**.
-
-Your website will be live in a few moments!
-
-## 📸 Screenshots
-*(Add screenshots of your application here)*
 
 ---
 Built with ❤️ for SRM Students.
